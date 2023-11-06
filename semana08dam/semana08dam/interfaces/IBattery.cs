@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace semana08dam
+
+namespace semana08dam.interfaces
 {
     public enum BatteryStatus
     {
@@ -25,8 +26,7 @@ namespace semana08dam
     public interface IBattery
     {
         int RemainingChargePercent { get; }
-        BatteryStatus Status { get; }
+        semana08dam.interfaces.BatteryStatus Status { get; }
         PowerSource PowerSource { get; }
     }
-
 }

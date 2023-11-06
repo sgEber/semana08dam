@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using semana08dam.interfaces;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+
 
 namespace semana08dam
 {
@@ -15,7 +16,6 @@ namespace semana08dam
         public BatteryDemo()
         {
             InitializeComponent();
-
             StackLayout stack = new StackLayout();
 
             var button = new Button

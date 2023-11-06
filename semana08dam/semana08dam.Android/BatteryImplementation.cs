@@ -1,14 +1,14 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using semana08dam;
 using semana08dam.Droid;
+using semana08dam.interfaces;
 using System;
 
 [assembly: Xamarin.Forms.Dependency(typeof(BatteryImplementation))]
 namespace semana08dam.Droid
 {
-    public class BatteryImplementation : IBattery
+    internal class BatteryImplementation : IBattery
     {
         public BatteryImplementation()
         {
@@ -39,7 +39,7 @@ namespace semana08dam.Droid
             }
         }
 
-        public semana08dam.BatteryStatus Status
+        public semana08dam.interfaces.BatteryStatus batteryStatus
         {
             get
             {
@@ -50,7 +50,7 @@ namespace semana08dam.Droid
                         using (var battery = Application.Context.RegisterReceiver(null, filter))
                         {
                             int status = battery.GetIntExtra(BatteryManager.ExtraStatus, -1);
-                            var isCharging = status == (int)BatteryStatus.Charging || status == (int)BatteryStatus.Full;
+                            var isCharging = status == (int)interfaces.BatteryStatus.Charging || status == (int)interfaces.BatteryStatus.Full;
 
                             var chargePlug = battery.GetIntExtra(BatteryManager.ExtraPlugged, -1);
                             var usbCharge = chargePlug == (int)BatteryPlugged.Usb;
@@ -60,20 +60,20 @@ namespace semana08dam.Droid
 
                             isCharging = (usbCharge || acCharge || wirelessCharge);
                             if (isCharging)
-                                return semana08dam.BatteryStatus.Charging;
+                                return semana08dam.interfaces.BatteryStatus.Charging;
 
                             switch (status)
                             {
-                                case (int)BatteryStatus.Charging:
-                                    return semana08dam.BatteryStatus.Charging;
-                                case (int)BatteryStatus.Discharging:
-                                    return semana08dam.BatteryStatus.Discharging;
-                                case (int)BatteryStatus.Full:
-                                    return semana08dam.BatteryStatus.Full;
-                                case (int)BatteryStatus.NotCharging:
-                                    return semana08dam.BatteryStatus.NotCharging;
+                                case (int)interfaces.BatteryStatus.Charging:
+                                    return semana08dam.interfaces.BatteryStatus.Charging;
+                                case (int)interfaces.BatteryStatus.Discharging:
+                                    return semana08dam.interfaces.BatteryStatus.Discharging;
+                                case (int)interfaces.BatteryStatus.Full:
+                                    return semana08dam.interfaces.BatteryStatus.Full;
+                                case (int)interfaces.BatteryStatus.NotCharging:
+                                    return semana08dam.interfaces.BatteryStatus.NotCharging;
                                 default:
-                                    return semana08dam.BatteryStatus.Unknown;
+                                    return semana08dam.interfaces.BatteryStatus.Unknown;
                             }
                         }
                     }
@@ -97,7 +97,7 @@ namespace semana08dam.Droid
                         using (var battery = Application.Context.RegisterReceiver(null, filter))
                         {
                             int status = battery.GetIntExtra(BatteryManager.ExtraStatus, -1);
-                            var isCharging = status == (int)BatteryStatus.Charging || status == (int)BatteryStatus.Full;
+                            var isCharging = status == (int)interfaces.BatteryStatus.Charging || status == (int)interfaces.BatteryStatus.Full;
 
                             var chargePlug = battery.GetIntExtra(BatteryManager.ExtraPlugged, -1);
                             var usbCharge = chargePlug == (int)BatteryPlugged.Usb;
@@ -109,15 +109,15 @@ namespace semana08dam.Droid
                             isCharging = (usbCharge || acCharge || wirelessCharge);
 
                             if (!isCharging)
-                                return semana08dam.PowerSource.Battery;
+                                return semana08dam.interfaces.PowerSource.Battery;
                             else if (usbCharge)
-                                return semana08dam.PowerSource.Usb;
+                                return semana08dam.interfaces.PowerSource.Usb;
                             else if (acCharge)
-                                return semana08dam.PowerSource.Ac;
+                                return semana08dam.interfaces.PowerSource.Ac;
                             else if (wirelessCharge)
-                                return semana08dam.PowerSource.Wireless;
+                                return semana08dam.interfaces.PowerSource.Wireless;
                             else
-                                return semana08dam.PowerSource.Other;
+                                return semana08dam.interfaces.PowerSource.Other;
                         }
                     }
                 }
